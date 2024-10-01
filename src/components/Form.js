@@ -1,19 +1,45 @@
 import { useState } from "react";  // Tu as oublié d'importer `useState`
 import "../css/style.css";
-import { useDispatch, useSelector } from "react-redux";
-import { login } from "../actions/authActions";  // L'action de connexion
+import { useDispatch} from "react-redux";
+import { login } from "../reducers/userReducer";  // L'action de connexion
+import { useNavigate } from "react-router-dom";
+
 
 const LoginForm = () => {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+const [error, setError] = useState(null);
+
+
   const dispatch = useDispatch();
-  const { loading, error, isAuthenticated } = useSelector(
-    (state) => state.auth
-  );
+
 
   const handleSubmit = (e) => {
     e.preventDefault();  // Empêche le comportement par défaut du formulaire (rechargement de la page)
-    dispatch(login(username, password));  // Déclenche l'action de connexion avec les valeurs du formulaire
+    
+    // console.log("Form submitted with:", { email, password });
+    
+  //réinitialiser les erreurs :
+  setError(null);  
+    
+    
+    
+    
+  dispatch(login({ email, password }))  // Déclenche l'action de connexion avec les valeurs du formulaire
+  .then((rep) =>{
+
+    if (rep.meta.requestStatus === "fulfilled"){
+      navigate("/User"); //redirige que si la co réussit
+    } else if (rep.meta.requestStatus === "rejected"){
+      setError("Invalid login credentials. Please try again.");
+    }
+  })
+  .catch((err)=>{
+    console.error(err);
+    // console.error("Dispatch error:", err);
+    setError("An error occurred. Please try again");
+  })
   };
 
   return (
@@ -24,8 +50,8 @@ const LoginForm = () => {
           <input
             type="text"
             id="username"
-            value={username}  // Lier l'état 'username' au champ
-            onChange={(e) => setUsername(e.target.value)}  // Met à jour l'état quand l'utilisateur tape
+            value={email}  // Lier l'état 'email' au champ
+            onChange={(e) => setEmail(e.target.value)}  // Met à jour l'état quand l'utilisateur tape
             required
           />
         </div>
@@ -45,15 +71,14 @@ const LoginForm = () => {
         </div>
 
         {/* Le bouton soumet maintenant le formulaire correctement */}
-        <button type="submit" className="sign-in-button" disabled={loading}>
-          {loading ? 'Connexion en cours...' : 'Sign In'}
+        <button type="submit" className="sign-in-button" >
+          Sign In
         </button>
 
         {/* Affichage des erreurs */}
         {error && <p style={{ color: "red" }}>{error}</p>}
 
-        {/* Si l'utilisateur est authentifié, tu pourrais rediriger ou afficher un message */}
-        {isAuthenticated && <p>Connexion réussie !</p>}
+   
       </form>
     </div>
   );
