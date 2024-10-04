@@ -7,6 +7,7 @@ const initialState = {
   token: localStorage.getItem("token") || null,
   currentUser: null,
   error: null,
+  isEditing: false,
   
 };
 //fonction de connexion
@@ -58,6 +59,12 @@ const userSlice = createSlice({
       state.currentUser = null;
       localStorage.removeItem("token");
     },
+    startEditing(state){
+      state.isEditing = true;
+    },
+    stopEditing(state){
+      state.isEditing = false;
+    }
   },
 
   extraReducers: (builder) => {
@@ -93,5 +100,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, startEditing, stopEditing } = userSlice.actions;
 export default userSlice.reducer;
