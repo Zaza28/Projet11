@@ -44,7 +44,7 @@ export default function NavBar() {
           <>
             <a className="main-nav-item" href="/User">
               <i className="fa fa-user-circle"></i>
-              {currentUser ? currentUser.firstName : "User"}
+              {currentUser ? currentUser.userName : "User"}
               
             </a>
             <a className="main-nav-item" href="#signout" onClick={handleSignOut}>
