@@ -15,10 +15,12 @@ body {
 
 .main {
   flex: 1;
+  margin-bottom: 10px;
 }
 
 .bg-dark {
   background-color: #12002b;
+  padding-bottom: 20px;
 }
 
 .sr-only {
@@ -210,13 +212,16 @@ body {
 .footer {
   display: flex;
   justify-content: center;
-  border-top: 2px solid #ccc;
+  /* border-top: 2px solid #ccc; */
   padding: 2rem 0 1.5rem;
+
+
 }
 
 .footer-text {
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 .account {
@@ -238,6 +243,7 @@ body {
   margin: 0;
   font-size: 2.5rem;
   font-weight: bold;
+
 }
 
 .account-amount-description {
@@ -294,6 +300,19 @@ width: 15%;
   border-color: #00bc77;
   background-color: #00bc77;
   color: #fff;
+}
+/****************page error*************/
+.error-title{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 100px;
+  overflow-wrap: normal;
+  width: 100px;
+  padding: 100px;
+  margin-bottom: 60px;
 }
 
 @media (min-width: 720px) {

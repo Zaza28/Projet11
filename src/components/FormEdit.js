@@ -1,11 +1,12 @@
 import "../css/style.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { setNewUserName, updateUser } from "../reducers/userReducer";
+import { setNewUserName, stopEditing, updateUser } from "../reducers/userReducer";
 import { useState } from "react"; 
 
+
 export default function FormEdit() {
-  const { currentUser } = useSelector((state) => state.userSlice || {}); // État pour gérer l'authentification
+  const { currentUser, isEditing } = useSelector((state) => state.userSlice || {}); // État pour gérer l'authentification
   const dispatch = useDispatch();
   const [userName, setuserName] = useState(currentUser.userName || "");
 
@@ -17,13 +18,23 @@ export default function FormEdit() {
   // Mettre à jour le nom d'utilisateur dans le store
   dispatch(setNewUserName(userName));
 
-
-    dispatch(updateUser( userName )) // Déclenche l'action de connexion avec les valeurs du formulaire
-      .catch((err) => {
+    dispatch(updateUser( userName)) // Déclenche l'action de connexion avec les valeurs du formulaire
+    .then(()=>{
+      dispatch(stopEditing());
+    })
+    .catch((err) => {
         console.error(err);
         // console.error("Dispatch error:", err);
       });
+
+      if(!isEditing){
+        return null;
+      }
+
+
+
   };
+
 
   //afficher toute la div si on clique sur le bouton edit ou pas 
   //pas besoin de creer handleisediting

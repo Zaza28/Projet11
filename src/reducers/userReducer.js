@@ -4,7 +4,7 @@ import axios from "axios";
 
 //etat initial de l'user
 const initialState = {
-  token: localStorage.getItem("token") || null,
+  token: sessionStorage.getItem("token") || null,
   currentUser: null,
   error: null,
   isEditing: false,
@@ -83,7 +83,7 @@ const userSlice = createSlice({
     logout(state) {
       state.token = null;
       state.currentUser = null;
-      localStorage.removeItem("token");
+      sessionStorage.removeItem("token");
     },
     startEditing(state){ //fonction qu'on appel sans l'avis du backend
       state.isEditing = true;
@@ -107,7 +107,12 @@ const userSlice = createSlice({
       state.token = action.payload.token;
       state.currentUser = action.payload;
       state.error = null;
-      localStorage.setItem("token", action.payload.token);
+
+
+
+
+
+      // sessionStorage.setItem("token", action.payload.token);
 
     });
     //gère le cas si la co échoue:

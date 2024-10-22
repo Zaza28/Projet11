@@ -9,6 +9,8 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+
 const [error, setError] = useState(null);
 
 
@@ -30,6 +32,13 @@ const [error, setError] = useState(null);
   .then((rep) =>{
 
     if (rep.meta.requestStatus === "fulfilled"){
+    if(rememberMe){
+      sessionStorage.setItem("token", rep.payload.token);
+
+    }
+    
+    
+    
       navigate("/User"); //redirige que si la co réussit
     } else if (rep.meta.requestStatus === "rejected"){
       setError("Invalid login credentials. Please try again.");
@@ -66,7 +75,9 @@ const [error, setError] = useState(null);
           />
         </div>
         <div className="input-remember">
-          <input type="checkbox" id="remember-me" />
+          <input type="checkbox" id="remember-me" 
+          onChange={(e) => setRememberMe(e.target.value)}
+          />
           <label htmlFor="remember-me">Remember me</label>
         </div>
 

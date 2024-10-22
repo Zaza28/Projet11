@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, } from "react-router-dom";
 import Home from "./pages/Home";
 import SignIn from "./pages/SignIn";
 import User from "./pages/User";
+import Error from "./pages/Error";
 import NavBar from "./components/Navbar";
 import Footer from "./components/Footer";
 import useAuth from "./outils/useAuth";
@@ -19,6 +20,7 @@ const isAuthenticated = useAuth();
         <Route path="/Home" element={<Home />}/>
         <Route path="/SignIn" element={<SignIn />}/>
         <Route path="/User" element={isAuthenticated ? <User /> : <Navigate to="/SignIn" />} />
+        <Route path="*" element={<Error />} />
       </Routes>
       <Footer />
       </BrowserRouter>
